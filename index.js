@@ -1,20 +1,29 @@
-const form = document.querySelector("#form");
+const form = document.querySelector("form");
 
 form.addEventListener("submit", function (e) {
-    e.preventDefault()
-    const campoA = document.querySelector("#campoA");
-    const campoB = document.querySelector("#campoB");
-    const resultado = document.querySelector(".resultado");
+  e.preventDefault();
+  const ul = $("ul");
+  const input = $("input").val();
+  const p = $(`<p>${input}</p>`);
+  const button = $(`<button class="del">
+                <img src="imagens/excluir.png" alt="" />
+              </button>`);
+  const novoLi = $(`<li></li>`);
+  $(p).appendTo(novoLi);
+  $(button).appendTo(novoLi);
+  $(novoLi).appendTo(ul);
+});
 
-    const a = Number(campoA.value)
-    const b = Number(campoB.value);
-
-    function validaValores(a, b) {
-    if(b > a) {
-        resultado.innerHTML = `<p class="valido">Formulário valido!</p>`;
-    } else if (b <= a) {
-        resultado.innerHTML = `<p class="invalido">Formulário invalido!</p>`;
-    }
+$(document).on("click", "li", function () {
+  const estiloLi = $(this).css("text-decoration");
+  if (estiloLi.includes("line-through")) {
+    $(this).css("text-decoration", "none");
+  } else {
+    $(this).css("text-decoration", "line-through");
   }
-  validaValores(a, b)
+});
+
+$(document).on("click", ".del", function (e) {
+  e.preventDefault();
+  $(this).closest("li").remove();
 });
